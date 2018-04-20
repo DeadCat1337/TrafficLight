@@ -4,15 +4,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Crossway {
-    public final static int SIDE_UP = 1, SIDE_DOWN = 2, 
-            SIDE_RIGHT = 3, SIDE_LEFT = 4;
     
     private TrafficLight rd[];
+    private Counter c;
     
     public Crossway(){
         rd = new TrafficLight[4];
-        for(TrafficLight r:rd){
-            
+        c = new Counter();
+        for(int i = 0; i < 4; i++){
+            rd[i] = new TrafficLight(rd, i, c);
+        }
+        Thread t[] = new Thread[4];
+        for(int i = 0; i < 4; i++){
+            t[i] = new Thread(rd[i]);
+            t[i].start();
         }
     }
     
